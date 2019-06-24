@@ -56,6 +56,9 @@ Benutzte Frameworks/Tools:
 - xpath [https://github.com/goto100/xpath] _changed to support only html_
 - momentjs [https://github.com/moment/moment]
 
+Repo: [https://github.com/janisdd/mensaMenuUniHalleTelegramBot]
+
+_Hinweis_: All Aufrufe werden u.U. geloggt (userId, Vor- und Nachname) und für /m, /m1, ... wird temporär die userId und die chatId gespeichert
 `
 
 export const botName = `Mensa Uni Halle Bot`
@@ -75,7 +78,7 @@ export const helpText =
 
 _Daten werden von der Url_ [${appConfig.webUrl}] _bzw._ [${appConfig.dataUrl}] _bezogen_
 
-Hinweis: Aufrufe werden u.U. geloggt (userId, Vor- und Nachname)
+_Hinweis_: All Aufrufe werden u.U. geloggt (userId, Vor- und Nachname) und für /m, /m1, ... wird temporär die userId und die chatId gespeichert
 `
 
 

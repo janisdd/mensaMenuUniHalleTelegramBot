@@ -116,9 +116,9 @@ bot.on('message', async (x, next) => {
 
     if (daysToAdd !== null) {
 
-      let menu = await getMensaMenuHtml(mensa.displayName, daysToAdd.toString())
-
       InMemorySessionStorage.clearDaysToAdd(x)
+
+      let menu = await getMensaMenuHtml(mensa.displayName, daysToAdd.toString())
 
       if (menu instanceof Error) {
         x.reply(`Error: ${menu.message}`, {
