@@ -15,6 +15,9 @@ export interface MensaDateObj {
   week: 0
 }
 
+/**
+ * @deprecated only for documentation purposes
+ */
 export interface MensaPostObj extends MensaDateObj  {
 
 
@@ -31,10 +34,7 @@ export interface MensaPostObj extends MensaDateObj  {
    *
    */
   "selected_locations[]": number
-
 }
-
-
 
 export interface MensaMenuEntry {
 

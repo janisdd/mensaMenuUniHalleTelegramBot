@@ -12,6 +12,7 @@ import {
   MensaLocation,
   Weinbergmensa
 } from './enums'
+import {promises} from 'fs'
 
 export function getMensaMenuAsMarkdown(mensaMenu: MensaMenuEntry[]): string[] {
 
@@ -40,6 +41,7 @@ export function getMensaMenuAsMarkdown(mensaMenu: MensaMenuEntry[]): string[] {
     //from https://stackoverflow.com/questions/38685619/how-to-send-an-embedded-image-along-with-text-in-a-message-via-telegram-bot-api/43705283
     //or https://stackoverflow.com/questions/39583130/send-an-image-link-to-telegram-without-display-image-url
     md += `[​​​​​​​​​​​](${entry.imgUrl})\n`
+    // md += `[${entry.imgUrl})]\n` //not working
     // md += `\n`
 
     mds.push(md)
@@ -139,4 +141,9 @@ export function getChoseMensaButtons(): ReplyKeyboardMarkup {
   }
 
   return keyboard
+}
+
+
+export function delay(ms: number): Promise<void> {
+  return new Promise( resolve => setTimeout(resolve, ms) );
 }

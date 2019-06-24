@@ -1,5 +1,11 @@
 import {abortCmd, abortText, aboutText, appConfig, helpText, startHandlermarkdown} from './constants'
-import {filterMensaMenuWithBlacklist, getChoseMensaButtons, getMensaFromName, getMensaMenuAsMarkdown,} from './helper'
+import {
+  delay,
+  filterMensaMenuWithBlacklist,
+  getChoseMensaButtons,
+  getMensaFromName,
+  getMensaMenuAsMarkdown,
+} from './helper'
 import {getMensaMenuHtml} from './mensaDataHelper'
 import {InMemorySessionStorage} from './inMemorySessionStorage'
 
@@ -122,20 +128,27 @@ bot.on('message', async (x, next) => {
       if (x.chat) {
 
         const daysToAddString = daysToAdd === 0
-                               ? ' heute'
-                               : daysToAdd === 1
-                                 ? ` morgen`
-                                 : ` in ${daysToAdd} Tagen`
+                                ? ' heute'
+                                : daysToAdd === 1
+                                  ? ` morgen`
+                                  : ` in ${daysToAdd} Tagen`
 
         await x.telegram.sendMessage(x.chat.id,
                                      `${mensa.prettyName} - Menü _${daysToAddString}_`, {
                                        // parse_mode: 'HTML',
                                        parse_mode: 'Markdown',
-                                       disable_web_page_preview: true
+                                       disable_web_page_preview: true,
+                                       reply_markup: {
+                                         remove_keyboard: true
+                                       }
                                      }
         )
 
         for (const markdownMenu of markdownMenus) {
+
+          //sometimes not all imgs are loaded... maybe delay helps?
+          await delay(200)
+
           await x.telegram.sendMessage(x.chat.id, markdownMenu, {
             // parse_mode: 'HTML',
             parse_mode: 'Markdown',
@@ -144,8 +157,7 @@ bot.on('message', async (x, next) => {
         }
       }
     }
-
-
+  
   }
 
   //call next method in chain if any e.g. on /abort next could be bot.command("abort" ...)
