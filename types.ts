@@ -90,4 +90,9 @@ export interface Config {
    * this is the direct inline iframe url
    */
   dataUrl: string
+
+  /**
+   * logs which users call the bot
+   */
+  logging?: boolean
 }

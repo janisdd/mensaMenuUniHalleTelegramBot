@@ -74,3 +74,6 @@ run the main file
 ```bash
 node dist/main.js
 ```
+
+
+to deploy you want to make `config.json` only accessible to the running user... (botToken should be only known to you!)

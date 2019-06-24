@@ -26,6 +26,9 @@ export function readConfig(): Config {
     if (!data.dataUrl) {
       throw new Error('dataUrl needs to be set')
     }
+    // if (data.logging === undefined) {
+    //   throw new Error('logging needs to be set')
+    // }
 
   } catch (err) {
     throw err
@@ -71,6 +74,8 @@ export const helpText =
 
 
 _Daten werden von der Url_ [${appConfig.webUrl}] _bzw._ [${appConfig.dataUrl}] _bezogen_
+
+Hinweis: Aufrufe werden u.U. geloggt (userId, Vor- und Nachname)
 `
 
 

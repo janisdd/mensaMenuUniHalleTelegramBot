@@ -65,6 +65,13 @@ for (let i = 0; i < commands.length; i++) {
                               ? ` morgen`
                               : ` in ${command.daysToAdd} Tagen`
 
+
+    if (appConfig.logging && x.from) {
+      console.log(`[/m${command.daysToAdd}] - user ${x.from.username} (${x.from.last_name}, ${x.from.first_name})`)
+    }
+
+
+
     x.reply(`Mensa wählen - ${daysToAddString} (${getDatePlusDaysToAddString(command.daysToAdd)})`, {
       reply_markup: getChoseMensaButtons(),
     })
@@ -172,3 +179,5 @@ bot.command('about', (x) => {
 
 bot.launch()
 console.log('--- mensa uni halle telegram bot started --- ')
+console.log('with config: ')
+console.log(JSON.stringify(appConfig, ((key, value) => key === 'botToken' ? '[hidden]' : value), '\t'))
