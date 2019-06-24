@@ -4,7 +4,7 @@ import {
   filterMensaMenuWithBlacklist,
   getChoseMensaButtons, getDatePlusDaysToAddString,
   getMensaFromName,
-  getMensaMenuAsMarkdown,
+  getMensaMenuAsMarkdown, logIf,
 } from './helper'
 import {getMensaMenuHtml} from './mensaDataHelper'
 import {InMemorySessionStorage} from './inMemorySessionStorage'
@@ -23,6 +23,9 @@ bot.start((ctx) => {
 })
 
 bot.help((x) => {
+
+  logIf(x, `help`)
+
   x.replyWithMarkdown(helpText, {
     disable_web_page_preview: true
   })
@@ -65,12 +68,7 @@ for (let i = 0; i < commands.length; i++) {
                               ? ` morgen`
                               : ` in ${command.daysToAdd} Tagen`
 
-
-    if (appConfig.logging && x.from) {
-      console.log(`[/m${command.daysToAdd}] - user ${x.from.username} (${x.from.last_name}, ${x.from.first_name})`)
-    }
-
-
+    logIf(x, `m${command.daysToAdd}`)
 
     x.reply(`Mensa wählen - ${daysToAddString} (${getDatePlusDaysToAddString(command.daysToAdd)})`, {
       reply_markup: getChoseMensaButtons(),
@@ -84,6 +82,8 @@ bot.command(abortCmd, (x) => {
   InMemorySessionStorage.clearDaysToAdd(x)
 
   if (!abortText) return
+
+  logIf(x, abortCmd)
 
   x.reply(abortText, {
     reply_markup: {
@@ -172,6 +172,9 @@ bot.on('message', async (x, next) => {
 })
 
 bot.command('about', (x) => {
+
+  logIf(x, 'about')
+
   x.replyWithMarkdown(aboutText, {
     disable_web_page_preview: true
   })

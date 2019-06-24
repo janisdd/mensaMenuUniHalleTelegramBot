@@ -1,5 +1,5 @@
 import {Config, MensaMenuEntry} from './types'
-import {abortCmd, blacklistDesks} from './constants'
+import {abortCmd, appConfig, blacklistDesks} from './constants'
 import {KeyboardButton, ReplyKeyboardMarkup} from 'telegram-typings';
 import {
   allMensaLocations,
@@ -14,6 +14,7 @@ import {
 } from './enums'
 import {promises} from 'fs'
 import moment = require('moment')
+import {ContextMessageUpdate} from 'telegraf'
 
 export function getMensaMenuAsMarkdown(mensaMenu: MensaMenuEntry[]): string[] {
 
@@ -157,4 +158,18 @@ export function getDatePlusDaysToAddString(daysToAdd: number): string {
   today.add(daysToAdd, 'day')
 
   return today.format('DD.MM.YYYY')
+}
+
+
+/**
+ *
+ * @param x
+ * @param cmd without starting /
+ */
+export function logIf(x: ContextMessageUpdate, cmd: string): void  {
+
+  if (appConfig.logging && x.from) {
+    console.log(`[/${cmd}] - user ${x.from.username} (${x.from.last_name}, ${x.from.first_name})`)
+  }
+
 }
