@@ -68,7 +68,7 @@ export async function getMensaMenuHtml(mensa: string, dateString?: string): Prom
                                  document, null, xpath.XPathResult.ANY_TYPE, null
     )
 
-    let node: Node
+    let node: Node | null
 
     let currentMenuEntry: MensaMenuEntry | null = emptyMensaMenyEntry()
 
@@ -98,7 +98,7 @@ export async function getMensaMenuHtml(mensa: string, dateString?: string): Prom
                                                xpath.XPathResult.ANY_TYPE, null
         )
 
-        let valNode: Node
+        let valNode: Node | null
 
         while (!!(valNode = ingredientsIter.iterateNext())) {
 

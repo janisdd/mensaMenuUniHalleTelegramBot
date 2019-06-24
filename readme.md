@@ -64,7 +64,7 @@ You need to have the typescript compiler (tsc) installed globally
 
 then do
 ```bash
-tsc -w
+tsc
 ```
 
 this will compile and watch the files for changes
