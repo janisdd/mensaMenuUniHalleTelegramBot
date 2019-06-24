@@ -51,6 +51,7 @@ Benutzte Frameworks/Tools:
 - html-entities [https://github.com/mdevils/node-html-entities]
 - xmldom [https://github.com/jindw/xmldom]
 - xpath [https://github.com/goto100/xpath] _changed to support only html_
+- momentjs [https://github.com/moment/moment]
 
 `
 

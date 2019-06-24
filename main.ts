@@ -2,7 +2,7 @@ import {abortCmd, abortText, aboutText, appConfig, helpText, startHandlermarkdow
 import {
   delay,
   filterMensaMenuWithBlacklist,
-  getChoseMensaButtons,
+  getChoseMensaButtons, getDatePlusDaysToAddString,
   getMensaFromName,
   getMensaMenuAsMarkdown,
 } from './helper'
@@ -65,7 +65,7 @@ for (let i = 0; i < commands.length; i++) {
                               ? ` morgen`
                               : ` in ${command.daysToAdd} Tagen`
 
-    x.reply(`Mensa wählen - Datum: ${daysToAddString}`, {
+    x.reply(`Mensa wählen - ${daysToAddString} (${getDatePlusDaysToAddString(command.daysToAdd)})`, {
       reply_markup: getChoseMensaButtons(),
     })
   })
@@ -134,7 +134,7 @@ bot.on('message', async (x, next) => {
                                   : ` in ${daysToAdd} Tagen`
 
         await x.telegram.sendMessage(x.chat.id,
-                                     `${mensa.prettyName} - Menü _${daysToAddString}_`, {
+                                     `${mensa.prettyName} - Menü _${daysToAddString}_ (${getDatePlusDaysToAddString(daysToAdd)})`, {
                                        // parse_mode: 'HTML',
                                        parse_mode: 'Markdown',
                                        disable_web_page_preview: true,
@@ -157,7 +157,7 @@ bot.on('message', async (x, next) => {
         }
       }
     }
-  
+
   }
 
   //call next method in chain if any e.g. on /abort next could be bot.command("abort" ...)

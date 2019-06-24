@@ -13,6 +13,7 @@ import {
   Weinbergmensa
 } from './enums'
 import {promises} from 'fs'
+import moment = require('moment')
 
 export function getMensaMenuAsMarkdown(mensaMenu: MensaMenuEntry[]): string[] {
 
@@ -146,4 +147,14 @@ export function getChoseMensaButtons(): ReplyKeyboardMarkup {
 
 export function delay(ms: number): Promise<void> {
   return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
+
+export function getDatePlusDaysToAddString(daysToAdd: number): string {
+
+  const today = moment()
+
+  today.add(daysToAdd, 'day')
+
+  return today.format('DD.MM.YYYY')
 }

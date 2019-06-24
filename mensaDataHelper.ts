@@ -5,6 +5,7 @@ import xpath from 'xpath'
 import {getMensaFromName} from './helper'
 import {allMensaLocations} from './enums'
 import {appConfig} from './constants'
+import moment = require('moment')
 
 const Entities = require('html-entities').AllHtmlEntities
 const entities = new Entities();
@@ -206,17 +207,20 @@ function getPostDateString(date?: string): MensaDateObj {
 
   const daysToAdd = processDateString(date)
 
-  const today = new Date()
+  const today = moment()
 
-  const year = today.getFullYear()
-  const day = today.getDate()
-  const month = today.getMonth() + 1
+  // const year = today.getFullYear()
+  // const day = today.getDate()
+  // const month = today.getMonth() + 1
+
+  today.add(daysToAdd, 'day')
+
 
   return {
-    day: day + daysToAdd,
+    day: today.date(),
     week: 0,
-    year,
-    month,
+    year: today.year(),
+    month: today.month()+1,
   }
 }
 
