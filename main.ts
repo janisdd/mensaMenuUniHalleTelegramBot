@@ -171,4 +171,4 @@ bot.command('about', (x) => {
 })
 
 bot.launch()
-
+console.log('--- mensa uni halle telegram bot started --- ')

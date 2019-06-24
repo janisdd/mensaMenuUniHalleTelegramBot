@@ -56,3 +56,21 @@ and enter the above list
 - `types` - some global types
   - other types are kept close to where they are used
 
+
+
+## Run locally
+
+You need to have the typescript compiler (tsc) installed globally
+
+then do
+```bash
+tsc -w
+```
+
+this will compile and watch the files for changes
+
+run the main file
+
+```bash
+node dist/main.js
+```
