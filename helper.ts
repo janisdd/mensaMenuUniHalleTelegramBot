@@ -2,7 +2,7 @@ import {Config, MensaMenuEntry} from './types'
 import {abortCmd, appConfig, blacklistDesks} from './constants'
 import {KeyboardButton, ReplyKeyboardMarkup} from 'telegram-typings';
 import {
-  allMensaLocations,
+  allMensaLocations, allZusätze,
   Harzmensa,
   Heidemensa,
   Mensa_Burg,
@@ -10,7 +10,7 @@ import {
   Mensa_Neuwerk,
   Mensa_Tulpe,
   MensaLocation,
-  Weinbergmensa
+  Weinbergmensa, Zusatz
 } from './enums'
 import {promises} from 'fs'
 import moment = require('moment')
@@ -25,8 +25,8 @@ export function getMensaMenuAsMarkdown(mensaMenu: MensaMenuEntry[]): string[] {
 
     let md = ``
 
-    md += `**${entry.desk}**\n`
-    md += `*${entry.title}*\n`
+    md += `${entry.desk}\n\n`
+    md += `*${entry.title}*\n\n`
 
     const additionsText = trimIntermediate(entry.additionsText)
     if (additionsText !== '') {
@@ -37,6 +37,14 @@ export function getMensaMenuAsMarkdown(mensaMenu: MensaMenuEntry[]): string[] {
     if (chooseText !== '') {
       md += `  ${chooseText}\n`
     }
+
+
+    const ingredients = entry.ingredients.map(p => getIngredient(p))
+
+    const ingredientsMd = getIngredientsMarkdown(ingredients)
+
+    md += `\n`
+    md += `${ingredientsMd}\n`
 
     md += `${entry.prices.join(' | ')}\n`
 
@@ -52,6 +60,55 @@ export function getMensaMenuAsMarkdown(mensaMenu: MensaMenuEntry[]): string[] {
   }
 
   return mds
+}
+
+/**
+ * returns the ingredient or the given text
+ * @param text
+ */
+function getIngredient(text: string): Zusatz | string {
+
+  const zusatz = allZusätze.find(p => p.id.trim().toLowerCase() === text.trim().toLowerCase())
+
+  if (!zusatz) return text
+
+  return zusatz
+}
+
+function getIngredientsMarkdown(ingredients: Array<Zusatz | string>): string {
+
+  let md = `Zusätze\n`
+  // let md = `\n`
+
+  for (let i = 0; i < ingredients.length; i++) {
+    const zusatz = ingredients[i]
+
+    if (typeof zusatz === 'string') {
+
+      md += `  ${zusatz} (unbekannt)\n`
+
+    } else {
+
+      if (zusatz.id === '50') {
+
+        md += `  ${zusatz.id} 🌱 _(${zusatz.text})_\n`
+
+      } else if (zusatz.id === '51') {
+
+        md += `  ${zusatz.id} 🌱🌱 _(${zusatz.text})_\n`
+
+      } else if (zusatz.id === '52') {
+
+        md += `  ${zusatz.id} 🌱🌱🌱 _(${zusatz.text})_\n`
+
+      } else {
+        md += `  ${zusatz.id} _(${zusatz.text})_\n`
+      }
+
+    }
+  }
+
+  return md
 }
 
 /**
@@ -147,7 +204,7 @@ export function getChoseMensaButtons(): ReplyKeyboardMarkup {
 
 
 export function delay(ms: number): Promise<void> {
-  return new Promise( resolve => setTimeout(resolve, ms) );
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 
@@ -166,7 +223,7 @@ export function getDatePlusDaysToAddString(daysToAdd: number): string {
  * @param x
  * @param cmd without starting /
  */
-export function logIf(x: ContextMessageUpdate, cmd: string): void  {
+export function logIf(x: ContextMessageUpdate, cmd: string): void {
 
   if (appConfig.logging && x.from) {
     console.log(`[/${cmd}] - user ${x.from.username} (${x.from.last_name}, ${x.from.first_name})`)

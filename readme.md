@@ -44,6 +44,11 @@ To add this to the bot
 and enter the above list
 
 
+a hidden command is
+```text
+/chatid - returns the chat id for debugging
+```
+
 
 ## Project structure
 

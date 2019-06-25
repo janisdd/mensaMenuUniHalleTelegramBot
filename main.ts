@@ -180,6 +180,11 @@ bot.command('about', (x) => {
   })
 })
 
+bot.command('chatid', (x) => {
+  if (!x.chat) return
+  x.reply(`chatId: ${x.chat.id}`)
+})
+
 bot.launch()
 console.log('--- mensa uni halle telegram bot started --- ')
 console.log('with config: ')
