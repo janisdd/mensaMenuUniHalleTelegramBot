@@ -4,7 +4,9 @@
 A bot to display the canteen menu via a telegram bot
 
 
+Telegram Bot Api
 
+https://core.telegram.org/bots
 
 ### How it works
 
@@ -82,3 +84,9 @@ node dist/main.js
 
 
 to deploy you want to make `config.json` only accessible to the running user... (botToken should be only known to you!)
+
+
+## Some notes
+
+- The data iframe page has some serious issues... sometimes the html is invalid and thus the xpath retunrs unexpected results
+  - e.g. sometimes in the main table the starting `tr` tags are missing??

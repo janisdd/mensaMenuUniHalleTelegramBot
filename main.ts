@@ -6,8 +6,9 @@ import {
   getMensaFromName,
   getMensaMenuAsMarkdown, logIf,
 } from './helper'
-import {getMensaMenuHtml} from './mensaDataHelper'
+import {getMensaMenuHtml, _getMensaMenuFromHtml} from './mensaDataHelper'
 import {InMemorySessionStorage} from './inMemorySessionStorage'
+import { Heidemensa } from './enums';
 
 
 const Telegraf = require('telegraf') as import("telegraf").TelegrafConstructor
@@ -189,3 +190,19 @@ bot.launch()
 console.log('--- mensa uni halle telegram bot started --- ')
 console.log('with config: ')
 console.log(JSON.stringify(appConfig, ((key, value) => key === 'botToken' ? '[hidden]' : value), '\t'))
+
+
+// async function main () {
+  // const mensa = Heidemensa
+  // let menu = await getMensaMenuHtml(mensa.displayName, `0`)
+
+  // if (menu instanceof Error) return
+
+  // menu = filterMensaMenuWithBlacklist(menu)
+  // const markdownMenus = getMensaMenuAsMarkdown(menu)
+
+// }
+
+// main()
+
+

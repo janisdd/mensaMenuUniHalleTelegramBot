@@ -41,6 +41,15 @@ export async function getMensaMenuHtml(mensa: string, dateString?: string): Prom
 
   const htmlString = entities.decode(res.data.toString('latin1'))
 
+  const mensaMenu = _getMensaMenuFromHtml(htmlString)
+
+  if (mensaMenu instanceof Error) return mensaMenu
+
+  return mensaMenu
+}
+
+export function _getMensaMenuFromHtml(html: string): MensaMenuEntry[] | Error {
+  
   let document: Document //= res.data as any as Document
 
   let mensaMenu: MensaMenuEntry[] = []
@@ -49,9 +58,10 @@ export async function getMensaMenuHtml(mensa: string, dateString?: string): Prom
 
     document = new xmldom.DOMParser({
                                       errorHandler: (level, msg) => {
+                                        // console.log(`[${level}] ${msg}`)
                                       },
                                       locator: {}
-                                    }).parseFromString(htmlString, 'text/html')
+                                    }).parseFromString(html, 'text/html')
 
     const numTr = xpath.evaluate("count(//table[@class='speiseplan']//tr)", document, null,
                                  xpath.XPathResult.NUMBER_TYPE,
@@ -139,6 +149,7 @@ export async function getMensaMenuHtml(mensa: string, dateString?: string): Prom
 
   return mensaMenu
 }
+
 
 function emptyMensaMenyEntry(): MensaMenuEntry {
   return {
