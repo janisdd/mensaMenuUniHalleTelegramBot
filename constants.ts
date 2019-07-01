@@ -81,6 +81,8 @@ export const helpText =
 _Daten werden von der Url_ [${appConfig.webUrl}] _bzw._ [${appConfig.dataUrl}] _bezogen_
 
 _Hinweis_: All Aufrufe werden u.U. geloggt (userId, Vor- und Nachname) und für /m, /m1, ... wird temporär die userId und die chatId gespeichert
+
+Erstellt von Janis Dähne
 `
 
 
