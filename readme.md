@@ -88,5 +88,6 @@ to deploy you want to make `config.json` only accessible to the running user... 
 
 ## Some notes
 
-- The data iframe page has some serious issues... sometimes the html is invalid and thus the xpath retunrs unexpected results
+- the data iframe page has some serious issues... sometimes the html is invalid and thus the xpath retunrs unexpected results
   - e.g. sometimes in the main table the starting `tr` tags are missing??
+- the new page link is like the old one but with a `/` at the end??

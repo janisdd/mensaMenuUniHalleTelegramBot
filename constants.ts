@@ -23,16 +23,18 @@ export function readConfig(): Config {
       throw new Error('webUrl needs to be set')
     }
 
-    if (data.webUrl.endsWith('/') === false) {
-      data.webUrl += '/'
+    // with the / we get another page....
+    if (data.webUrl.endsWith('/')) {
+      data.webUrl = data.webUrl.substr(0, data.webUrl.length-1)
     }
 
     if (!data.dataUrl) {
       throw new Error('dataUrl needs to be set')
     }
 
-    if (data.dataUrl.endsWith('/') === false) {
-      data.dataUrl += '/'
+    // with the / we get another page....
+    if (data.dataUrl.endsWith('/')) {
+      data.dataUrl = data.dataUrl.substr(0, data.dataUrl.length-1)
     }
 
     // if (data.logging === undefined) {

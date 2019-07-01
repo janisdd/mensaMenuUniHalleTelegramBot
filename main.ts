@@ -169,7 +169,7 @@ bot.on('message', async (x, next) => {
         if (markdownMenus.length < unexpectedFewMenuItemsCountExclusive) {
           //probably there was some issue with the html (missing tags) thus the xpath returned unepected results
 
-          let mensaDirectLink = getMensaPostUrl(mensa.name, daysToAdd.toString())
+          let mensaDirectLink = getMensaPostUrl(mensa.buttonName, daysToAdd.toString())
           let replyText = unexpectedFewMenuItems
 
           if (mensaDirectLink instanceof Error) {
@@ -178,7 +178,7 @@ bot.on('message', async (x, next) => {
             replyText += `${appConfig.dataUrl} (konnte den direkten Link nicht erstellen, daher der allgemeine Link)`
           }
           else {
-            replyText +=  `${appConfig.dataUrl}${mensaDirectLink}`
+            replyText +=  `${appConfig.dataUrl}?${mensaDirectLink}`
           }
 
           await x.telegram.sendMessage(x.chat.id, replyText, {
@@ -219,7 +219,7 @@ bot.command('chatid', (x) => {
 
 bot.launch()
 console.log('--- mensa uni halle telegram bot started --- ')
-console.log('with config: ')
+console.log('with config (cleaned urls): ')
 console.log(JSON.stringify(appConfig, ((key, value) => key === 'botToken' ? '[hidden]' : value), '\t'))
 
 

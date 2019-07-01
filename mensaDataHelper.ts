@@ -68,7 +68,7 @@ export function _getMensaMenuFromHtml(html: string): MensaMenuEntry[] | Error {
                                  null
     ).numberValue
 
-    if (numTr === 4) {
+    if (numTr <= 4) {
       //empty menu
       return []
     }
