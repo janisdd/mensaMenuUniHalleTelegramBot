@@ -1,5 +1,5 @@
-import {Config, MensaEntryFilter, MensaMenuEntry} from './types'
-import {ContextMessageUpdate} from 'telegraf'
+import { Config, MensaEntryFilter, MensaMenuEntry } from './types'
+import { ContextMessageUpdate } from 'telegraf'
 import * as fs from 'fs'
 
 
@@ -12,7 +12,7 @@ export function readConfig(): Config {
   let data: Config
 
   try {
-    const text = fs.readFileSync('config.json', {encoding: 'utf-8'})
+    const text = fs.readFileSync('config.json', { encoding: 'utf-8' })
     data = JSON.parse(text)
 
     if (!data.botToken || data.botToken.length !== 45) {
@@ -23,9 +23,18 @@ export function readConfig(): Config {
       throw new Error('webUrl needs to be set')
     }
 
+    if (data.webUrl.endsWith('/') === false) {
+      data.webUrl += '/'
+    }
+
     if (!data.dataUrl) {
       throw new Error('dataUrl needs to be set')
     }
+
+    if (data.dataUrl.endsWith('/') === false) {
+      data.dataUrl += '/'
+    }
+
     // if (data.logging === undefined) {
     //   throw new Error('logging needs to be set')
     // }
@@ -41,12 +50,18 @@ export function readConfig(): Config {
 
 export const appConfig = readConfig()
 
+export const botName = `Mensa Uni Halle Bot v1.0.1`
 
 export const abortCmd = 'abbrechen'
 export const abortText = 'Abgeborchen'
 
+export const unexpectedFewMenuItemsCountExclusive = 4 //if we have less than this...
+export const unexpectedFewMenuItems = `Es wurden weniger als ${unexpectedFewMenuItemsCountExclusive} Gerichte abgerufen... Möglicherweise konnten die Daten nicht vollständig abgerufen werden, da das Html der Mensa Seite vermutlich ungültig war. Hier ist der Link, damit du die Gerichte manuell einsehen kannst `
 
-export const aboutText = `Erstellt von Janis Dähne
+export const aboutText = `${botName}
+
+Erstellt von Janis Dähne
+
 Benutzte Frameworks/Tools: 
 
 - telegraf.js [https://github.com/telegraf/telegraf]
@@ -60,10 +75,12 @@ Repo: [https://github.com/janisdd/mensaMenuUniHalleTelegramBot]
 
 _Daten werden von der Url_ [${appConfig.webUrl}] _bzw._ [${appConfig.dataUrl}] _bezogen_
 
-_Hinweis_: All Aufrufe werden u.U. geloggt (userId, Vor- und Nachname) und für /m, /m1, ... wird temporär die userId und die chatId gespeichert
+_Hinweise_: 
+- Wenn 3 oder weniger Gerichte angezeigt werden, kann es sein, dass die Daten nicht richtig abgerufen wurden. Das liegt daran, dass die Seite der Mensa manchmal kein gültiges Html ist (öffnende Tags wurden vergessen). Ist das der Fall, so wird der Link zur Seite als separate Nachricht ausgegeben.
+- All Aufrufe werden u.U. geloggt (userId, Vor- und Nachname) und für /m, /m1, ... wird temporär die userId und die chatId gespeichert
 `
 
-export const botName = `Mensa Uni Halle Bot`
+
 export const helpText =
   ` --- ${botName} Usage ---
   
@@ -80,7 +97,9 @@ export const helpText =
 
 _Daten werden von der Url_ [${appConfig.webUrl}] _bzw._ [${appConfig.dataUrl}] _bezogen_
 
-_Hinweis_: All Aufrufe werden u.U. geloggt (userId, Vor- und Nachname) und für /m, /m1, ... wird temporär die userId und die chatId gespeichert
+_Hinweise_:
+- Wenn 3 oder weniger Gerichte angezeigt werden, kann es sein, dass die Daten nicht richtig abgerufen wurden. Das liegt daran, dass die Seite der Mensa manchmal kein gültiges Html ist (öffnende Tags wurden vergessen). Ist das der Fall, so wird der Link zur Seite als separate Nachricht ausgegeben.
+- All Aufrufe werden u.U. geloggt (userId, Vor- und Nachname) und für /m, /m1, ... wird temporär die userId und die chatId gespeichert
 
 Erstellt von Janis Dähne
 `

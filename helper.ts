@@ -138,7 +138,7 @@ export function filterMensaMenuWithBlacklist(menu: MensaMenuEntry[]): MensaMenuE
  * tries to get the mensa location from the mensa string
  * @param mensaName
  */
-export function getMensaFromName(mensaName: string): MensaLocation | Error {
+export function getMensaFromButtonName(mensaName: string): MensaLocation | Error {
 
   if (!mensaName) return new Error(`mensaName was empty or falsy`)
 
@@ -146,7 +146,7 @@ export function getMensaFromName(mensaName: string): MensaLocation | Error {
 
   for (const mensaLocation of allMensaLocations) {
 
-    if (mensaLocation.displayName === mensaName) {
+    if (mensaLocation.buttonName === mensaName) {
       return mensaLocation
     }
 
@@ -159,30 +159,30 @@ export function getChoseMensaButtons(): ReplyKeyboardMarkup {
 
   const row1: KeyboardButton[] = [
     {
-      text: Heidemensa.displayName
+      text: Heidemensa.buttonName
     },
     {
-      text: Weinbergmensa.displayName
+      text: Weinbergmensa.buttonName
     },
     {
-      text: Harzmensa.displayName
+      text: Harzmensa.buttonName
     },
   ]
 
   const row2: KeyboardButton[] = [
     {
-      text: Mensa_Tulpe.displayName
+      text: Mensa_Tulpe.buttonName
     },
     {
-      text: Mensa_Burg.displayName
+      text: Mensa_Burg.buttonName
     },
     {
-      text: Mensa_Neuwerk.displayName
+      text: Mensa_Neuwerk.buttonName
     },
   ]
   const row3: KeyboardButton[] = [
     {
-      text: Mensa_Franckesche_Stiftungen.displayName
+      text: Mensa_Franckesche_Stiftungen.buttonName
     },
     {
       text: `/${abortCmd}`

@@ -2,7 +2,7 @@ import {MensaDateObj, MensaMenuEntry} from './types'
 import axios, {AxiosRequestConfig} from 'axios'
 import xmldom from 'xmldom'
 import xpath from 'xpath'
-import {getMensaFromName} from './helper'
+import {getMensaFromButtonName} from './helper'
 import {allMensaLocations} from './enums'
 import {appConfig} from './constants'
 import moment = require('moment')
@@ -14,7 +14,7 @@ export async function getMensaMenuHtml(mensa: string, dateString?: string): Prom
 
   mensa = mensa.toLowerCase()
 
-  const mensaLocation = allMensaLocations.find(p => p.displayName.toLowerCase() === mensa)
+  const mensaLocation = allMensaLocations.find(p => p.buttonName.toLowerCase() === mensa)
 
   if (!mensaLocation) {
     return new Error('mensa not found')
@@ -167,12 +167,13 @@ function emptyMensaMenyEntry(): MensaMenuEntry {
 
 /**
  * gets the mensa post url
+ * Turns out this can also be used as get with url encoded params...
  * @param mensa
  * @param dateString
  */
-function getMensaPostUrl(mensa: string, dateString?: string): string | Error {
+export function getMensaPostUrl(mensa: string, dateString?: string): string | Error {
 
-  const location = getMensaFromName(mensa)
+  const location = getMensaFromButtonName(mensa)
 
   if (location instanceof Error) return location
 

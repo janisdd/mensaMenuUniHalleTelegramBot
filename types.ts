@@ -84,10 +84,12 @@ export interface Config {
   botToken: string
   /**
    * this is the url of the mensa page
+   * read config ensures a / at the end of this url
    */
   webUrl: string
   /**
    * this is the direct inline iframe url
+   * read config ensures a / at the end of this url
    */
   dataUrl: string
 

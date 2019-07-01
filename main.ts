@@ -1,14 +1,15 @@
-import {abortCmd, abortText, aboutText, appConfig, helpText, startHandlermarkdown} from './constants'
+import {abortCmd, abortText, aboutText, appConfig, helpText, startHandlermarkdown, unexpectedFewMenuItems, unexpectedFewMenuItemsCountExclusive} from './constants'
 import {
   delay,
   filterMensaMenuWithBlacklist,
   getChoseMensaButtons, getDatePlusDaysToAddString,
-  getMensaFromName,
+  getMensaFromButtonName,
   getMensaMenuAsMarkdown, logIf,
 } from './helper'
-import {getMensaMenuHtml, _getMensaMenuFromHtml} from './mensaDataHelper'
+import {getMensaMenuHtml, _getMensaMenuFromHtml, getMensaPostUrl} from './mensaDataHelper'
 import {InMemorySessionStorage} from './inMemorySessionStorage'
 import { Heidemensa } from './enums';
+import moment = require('moment');
 
 
 const Telegraf = require('telegraf') as import("telegraf").TelegrafConstructor
@@ -107,7 +108,7 @@ bot.on('message', async (x, next) => {
   }
 
 
-  const mensa = getMensaFromName(x.message.text)
+  const mensa = getMensaFromButtonName(x.message.text)
 
   if (!(mensa instanceof Error)) {
 
@@ -119,7 +120,7 @@ bot.on('message', async (x, next) => {
 
       InMemorySessionStorage.clearDaysToAdd(x)
 
-      let menu = await getMensaMenuHtml(mensa.displayName, daysToAdd.toString())
+      let menu = await getMensaMenuHtml(mensa.buttonName, daysToAdd.toString())
 
       if (menu instanceof Error) {
         x.reply(`Error: ${menu.message}`, {
@@ -160,9 +161,32 @@ bot.on('message', async (x, next) => {
           await x.telegram.sendMessage(x.chat.id, markdownMenu, {
             // parse_mode: 'HTML',
             parse_mode: 'Markdown',
-            disable_web_page_preview: false
+            disable_web_page_preview: false,
+            disable_notification: true
           })
         }
+
+        if (markdownMenus.length < unexpectedFewMenuItemsCountExclusive) {
+          //probably there was some issue with the html (missing tags) thus the xpath returned unepected results
+
+          let mensaDirectLink = getMensaPostUrl(mensa.name, daysToAdd.toString())
+          let replyText = unexpectedFewMenuItems
+
+          if (mensaDirectLink instanceof Error) {
+            console.warn(`could not get mensa direct link with params: ${mensa.name}, date: ${daysToAdd.toString()}, today: ${moment().format()}`)
+
+            replyText += `${appConfig.dataUrl} (konnte den direkten Link nicht erstellen, daher der allgemeine Link)`
+          }
+          else {
+            replyText +=  `${appConfig.dataUrl}${mensaDirectLink}`
+          }
+
+          await x.telegram.sendMessage(x.chat.id, replyText, {
+            disable_notification: false
+          })
+
+        }
+
       }
     }
 
@@ -185,6 +209,13 @@ bot.command('chatid', (x) => {
   if (!x.chat) return
   x.reply(`chatId: ${x.chat.id}`)
 })
+
+// bot.command('test', (x) => {
+  
+//   let mensaDirectLink = getMensaPostUrl(Heidemensa.buttonName, "1")
+//   let replyText = unexpectedFewMenuItems + `${appConfig.dataUrl}${mensaDirectLink}`
+//   x.reply(replyText)
+// })
 
 bot.launch()
 console.log('--- mensa uni halle telegram bot started --- ')

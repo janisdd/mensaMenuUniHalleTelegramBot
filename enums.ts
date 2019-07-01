@@ -26,7 +26,7 @@ export interface MensaLocation {
   /**
    * name for buttons
    */
-  displayName: string
+  buttonName: string
   /**
    * name for output
    */
@@ -36,42 +36,42 @@ export interface MensaLocation {
 export const Harzmensa: MensaLocation = {
   id: 3,
   name: 'Harzmensa',
-  displayName: 'harz',
+  buttonName: 'harz',
   prettyName: 'Harzmensa',
 }
 
 export const Mensa_Neuwerk: MensaLocation = {
   id: 9,
   name: 'Mensa_Neuwerk',
-  displayName: 'neuwerk',
+  buttonName: 'neuwerk',
   prettyName: 'Mensa Neuwerk',
 }
 
 export const Weinbergmensa: MensaLocation = {
   id: 5,
   name: 'Weinbergmensa',
-  displayName: 'weinberg',
+  buttonName: 'weinberg',
   prettyName: 'Weinbergmensa',
 }
 
 export const Heidemensa: MensaLocation = {
   id: 17,
   name: 'Heidemensa',
-  displayName: 'heide',
+  buttonName: 'heide',
   prettyName: 'Heidemensa',
 }
 
 export const Mensa_Burg: MensaLocation = {
   id: 12,
   name: 'Mensa_Burg',
-  displayName: 'burg',
+  buttonName: 'burg',
   prettyName: 'Mensa Burg',
 }
 
 export const Mensa_Franckesche_Stiftungen: MensaLocation = {
   id: 14,
   name: 'Mensa_Franckesche_Stiftungen',
-  displayName: 'franckesche stiftungen',
+  buttonName: 'franckesche stiftungen',
   prettyName: 'Mensa Franckesche Stiftungen',
 }
 
@@ -79,7 +79,7 @@ export const Mensa_Franckesche_Stiftungen: MensaLocation = {
 export const Mensa_Tulpe: MensaLocation = {
   id: 10,
   name: 'Mensa_Tulpe',
-  displayName: 'tulpe',
+  buttonName: 'tulpe',
   prettyName: 'Mensa Tulpe',
 }
 
